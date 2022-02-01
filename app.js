@@ -3,6 +3,14 @@
 //compare plays to decide winner in playRound(userPlay, computerPlay)
 //playRound(...) 5 times to decide match winner in game()
 
+const btns = document.querySelectorAll('button');
+
+btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        playRound(getComputerPlay(), btn.className.split('-')[0].toUpperCase());
+    })
+})
+
 const PLAYS = ['ROCK', 'PAPER', 'SCISSORS'];
 
 function getComputerPlay(){
@@ -28,19 +36,19 @@ function playRound(computerPlay, userPlay){
     else return `You lose. ${computerPlay} beats ${userPlay}`  
 }
 
-function game(){
-    let rounds = 5;
-    let userScore = 0;
-    let computerScore = 0;
-    for(let i = 0; i < rounds; i++){
-        let result = playRound(getComputerPlay(), getUserPlay());
-        console.log(result);
-        if(result.startsWith('You win')) userScore++;
-        else if(result.startsWith('You lose')) computerScore++;
-    }
-    if(userScore > computerScore) console.log('You won the game!')
-    else if(userScore < computerScore) console.log('You lost the game.')
-    else console.log('The game ended in a draw.');
-}
+// function game(){
+//     let rounds = 5;
+//     let userScore = 0;
+//     let computerScore = 0;
+//     for(let i = 0; i < rounds; i++){
+//         let result = playRound(getComputerPlay(), getUserPlay());
+//         console.log(result);
+//         if(result.startsWith('You win')) userScore++;
+//         else if(result.startsWith('You lose')) computerScore++;
+//     }
+//     if(userScore > computerScore) console.log('You won the game!')
+//     else if(userScore < computerScore) console.log('You lost the game.')
+//     else console.log('The game ended in a draw.');
+// }
 
-game();
+// game();
