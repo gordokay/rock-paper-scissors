@@ -47,20 +47,3 @@ function playRound(computerPlay, userPlay){
         }
     }
 }
-
-// function game(){
-//     let rounds = 5;
-//     let userScore = 0;
-//     let computerScore = 0;
-//     for(let i = 0; i < rounds; i++){
-//         let result = playRound(getComputerPlay(), getUserPlay());
-//         console.log(result);
-//         if(result.startsWith('You win')) userScore++;
-//         else if(result.startsWith('You lose')) computerScore++;
-//     }
-//     if(userScore > computerScore) console.log('You won the game!')
-//     else if(userScore < computerScore) console.log('You lost the game.')
-//     else console.log('The game ended in a draw.');
-// }
-
-// game();
