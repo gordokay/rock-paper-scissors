@@ -4,6 +4,9 @@
 //playRound(...) 5 times to decide match winner in game()
 
 const btns = document.querySelectorAll('button');
+const display = document.querySelector('.display');
+let userScore = 0;
+let computerScore = 0;
 
 btns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -18,22 +21,31 @@ function getComputerPlay(){
     return PLAYS[play];
 }
 
-function getUserPlay(){
-    const play = prompt("Enter your play: ");
-    return play.toUpperCase();
-}
-
 function playRound(computerPlay, userPlay){
     //draw
-    if(computerPlay === userPlay) return "It's a draw!";
+    if(computerPlay === userPlay) display.textContent = `It's a draw! you: ${userScore} - comp: ${computerScore}`;
     //win conditions
     else if((computerPlay === 'ROCK' && userPlay === 'PAPER')
     || (computerPlay === 'PAPER' && userPlay === 'SCISSORS')
     || (computerPlay === 'SCISSORS' && userPlay === 'ROCK')){
-        return `You win! ${userPlay} beats ${computerPlay}` 
+        userScore++;
+        display.textContent = `You win! ${userPlay} beats ${computerPlay} you: ${userScore} - comp: ${computerScore}`;
+        if(userScore === 5) {
+            display.textContent = 'nice you won!!';
+            userScore = 0;
+            computerScore = 0; 
+        }
     }
     //lose
-    else return `You lose. ${computerPlay} beats ${userPlay}`  
+    else {
+        computerScore++;
+        display.textContent = `You lose. ${computerPlay} beats ${userPlay} you: ${userScore} - comp: ${computerScore}`  
+        if(computerScore === 5) {
+            display.textContent = 'you freakin lost';
+            userScore = 0;
+            computerScore = 0; 
+        }
+    }
 }
 
 // function game(){
