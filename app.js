@@ -17,7 +17,7 @@ function playRound(playerSelection, computerSelection) {
   return `You lose! ${computerSelection} beats ${playerSelection}`;
 }
 
-function game(){
+function game() {
   let playerWins = 0;
   let computerWins = 0;
   for(let i = 0; i < 5; i++) {
