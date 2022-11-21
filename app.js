@@ -1,46 +1,67 @@
+const buttons = document.querySelectorAll('button');
+const playerScore = document.querySelector('.player');
+const computerScore = document.querySelector('.computer');
+const result = document.querySelector('.result');
+
 function getComputerChoice() {
-  let options = ['Rock', 'Paper', 'Scissors'];
+  const options = ['Rock', 'Paper', 'Scissors'];
   let choiceIndex = Math.floor(Math.random() * 3);
   return options[choiceIndex];
 }
 
-function playRound(playerSelection, computerSelection) {
+function getScore(player) {
+  const playerScoreArray = player.textContent.split(' ');
+  return Number(playerScoreArray[playerScoreArray.length - 1]);
+}
+
+function updateScore(player) {
+  //split score string into words
+  const current = player.textContent.split(' ');
+  //get last word containing score value and update
+  current[current.length - 1] = getScore(player) + 1;
+  player.textContent = current.join(' ');
+}
+
+function checkWin() {
+  let playerScoreValue = getScore(playerScore);
+  let computerScoreValue =getScore(computerScore);
+
+  if(playerScoreValue === 5 || computerScoreValue === 5) {
+    for(let button of buttons) {
+      button.removeEventListener('click', playRound);
+    }
+    if(playerScoreValue === 5) {
+      result.textContent = 'You win!';
+    } else {
+      result.textContent = 'You lose!';
+    }
+  }
+}
+
+function playRound() {
+  let playerSelection = this.textContent;
+  let computerSelection = getComputerChoice();
+
   if(playerSelection === computerSelection) {
-    return 'It\'s a draw!';
+    result.textContent = 'It\'s a draw!';
+    return;
   }
   let round = playerSelection + computerSelection;
   // array of player win conditions modeled as 'PlayerComputer'
   let winConditions = ['RockScissors', 'ScissorsPaper', 'PaperRock'];
   if(winConditions.includes(round)) {
-    return `You win! ${playerSelection} beats ${computerSelection}`;
+    result.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
+    updateScore(playerScore);
+  } else {
+    result.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+    updateScore(computerScore);
   }
-  return `You lose! ${computerSelection} beats ${playerSelection}`;
+  checkWin();
 }
 
 function game() {
-  let playerWins = 0;
-  let computerWins = 0;
-  for(let i = 0; i < 5; i++) {
-    let playerSelection = prompt('Rock, paper, scissors, shoot!');
-    // change input to initial capital format
-    playerSelection = playerSelection.slice(0, 1).toUpperCase() + playerSelection.slice(1).toLowerCase();
-    let result = playRound(playerSelection, getComputerChoice());
-    if(result.includes('win')) {
-      playerWins++;
-    }
-    else if(result.includes('lose')) {
-      computerWins++;
-    }
-    console.log(result);
-  }
-  if(playerWins > computerWins) {
-    console.log('You win!');
-  }
-  else if(computerWins > playerWins) {
-    console.log('You lose!');
-  }
-  else {
-    console.log('It\'s a tie!');
+  for(let button of buttons){
+    button.addEventListener('click', playRound);
   }
 }
 
